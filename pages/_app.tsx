@@ -1,8 +1,10 @@
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { ToastContainer } from "react-toastify";
+import { ThirdwebProvider, ChainId } from "@thirdweb-dev/react";
 
 import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const AnyComponent = Component as any;
@@ -13,7 +15,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>NFT Mint and Listing</title>
         <link rel="icon" href="/favicon.ico"></link>
       </Head>
-      <ThirdwebProvider>
+      <ToastContainer
+        position="top-right"
+        closeOnClick
+        hideProgressBar={false}
+      />
+      <ThirdwebProvider activeChain={ChainId.Goerli}>
         <AnyComponent {...pageProps} />
       </ThirdwebProvider>
     </>

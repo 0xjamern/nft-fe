@@ -23,7 +23,8 @@ const ColorStyle = {
 };
 
 export function showNotification(message: string, type: NotificationType) {
-  toast.loading(message, {
+  return toast(message, {
+    autoClose: 3000,
     style: {
       ...CommonStyle,
       ...ColorStyle[type],
