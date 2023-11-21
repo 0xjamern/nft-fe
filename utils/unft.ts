@@ -1,4 +1,4 @@
-import { Contract, providers, utils } from "ethers";
+import { Contract, Signer, providers, utils } from "ethers";
 
 import { CONTRACTS, RPC_URL } from "../utils/const";
 import UNftAbi from "../abis/unft.json";
@@ -19,4 +19,24 @@ export const getCurrentId = async (): Promise<string> => {
 export const getNftName = async (): Promise<string> => {
   const nftName = await UNftContract.name();
   return nftName.toString();
+};
+
+export const mintNft = async (
+  signer: Signer,
+  valueAmt: string,
+  uri: string
+): Promise<string> => {
+  try {
+    const tx = await UNftContract.connect(signer).mint(uri, {
+      value: utils.parseEther(valueAmt),
+    });
+    if (tx) {
+      await tx.wait();
+      return tx.hash;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+
+  return "";
 };

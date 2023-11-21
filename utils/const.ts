@@ -3,3 +3,5 @@ export const CONTRACTS = {
 };
 
 export const RPC_URL = "https://rpc.ankr.com/eth_goerli";
+
+// export const IPFS_URL = "https://ipfs.io/ipfs/";

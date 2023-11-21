@@ -20,7 +20,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         closeOnClick
         hideProgressBar={false}
       />
-      <ThirdwebProvider activeChain={ChainId.Goerli}>
+      <ThirdwebProvider
+        activeChain={ChainId.Goerli}
+        clientId={process.env.NEXT_PUBLIC_THIRDWEB_PROJECT_ID}
+      >
         <AnyComponent {...pageProps} />
       </ThirdwebProvider>
     </>
