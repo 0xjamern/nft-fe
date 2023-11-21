@@ -37,11 +37,10 @@ function mint() {
   // auth
   useEffect(() => {
     const initValues = async () => {
+      await initCurrentId();
+
       const mintValue: string = await getMintValue();
       setPriceInEth(mintValue);
-
-      const currentId: string = await getCurrentId();
-      setClaimedSupply(currentId);
 
       const nftCollectionName: string = await getNftName();
       setCollectionName(nftCollectionName);
@@ -55,6 +54,11 @@ function mint() {
   useEffect(() => {
     switchNetwork();
   }, [address]);
+
+  const initCurrentId = async (): Promise<void> => {
+    const currentId: string = await getCurrentId();
+    setClaimedSupply(currentId);
+  };
 
   const switchNetwork = async (): Promise<void> => {
     if (isMismatched) {
@@ -117,6 +121,7 @@ function mint() {
 
     const mintResult: string = await mintNft(signer, priceInEth, ipfsHash);
     if (mintResult.length > 0) {
+      await initCurrentId();
       showNotification("Successfully minted", NotificationType.SUCCESS);
     } else {
       showNotification("Failed to mint", NotificationType.ERROR);
