@@ -8,10 +8,15 @@ export interface AttributeType {
   value: string;
 }
 
+export interface NFTAttribute {
+  traid_type: string;
+  value: string;
+}
+
 export interface NftDetail {
   id: string;
   image: string;
   name: string;
   owner: string;
-  attributes: AttributeType[];
+  attributes: NFTAttribute[];
 }
