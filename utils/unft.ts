@@ -21,6 +21,25 @@ export const getNftName = async (): Promise<string> => {
   return nftName.toString();
 };
 
+export const formatUri = (uri: string): string => {
+  return uri.includes("/ipfs/")
+    ? uri
+    : uri.replace(
+        "https://aquamarine-worthwhile-reindeer-880.mypinata.cloud/",
+        "https://aquamarine-worthwhile-reindeer-880.mypinata.cloud/ipfs/"
+      );
+};
+
+export const getTokenUri = async (tokenId: number): Promise<string> => {
+  const tokenUri = (await UNftContract.tokenURI(tokenId)).toString();
+  return formatUri(tokenUri);
+};
+
+export const getOwner = async (tokenId: number): Promise<string> => {
+  const owner = await UNftContract.ownerOf(tokenId);
+  return owner;
+};
+
 export const mintNft = async (
   signer: Signer,
   valueAmt: string,

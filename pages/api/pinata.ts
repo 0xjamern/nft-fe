@@ -65,7 +65,7 @@ export default async function handler(
   } else if (req.method === "GET") {
     try {
       const response = await pinata.pinList({
-        pageLimit: 1,
+        pageLimit: 10,
       });
       res.status(200).json(response.rows[0]);
     } catch (e) {

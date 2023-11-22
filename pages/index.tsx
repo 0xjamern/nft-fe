@@ -11,10 +11,13 @@ import {
 } from "@thirdweb-dev/react";
 import { useDropzone } from "react-dropzone";
 
+import { LeftPanel } from "../components/mint/LeftPanel";
+import { AddressPanel } from "../components/mint/AddressPanel";
+
+import { ImgPreview, AttributeType } from "../utils/types";
 import { showNotification, NotificationType } from "../utils/notification";
 import { thumb, thumbInner, thumbsContainer, img } from "../utils/dropzone";
 import { getMintValue, getCurrentId, getNftName, mintNft } from "../utils/unft";
-import { ImgPreview, AttributeType } from "../utils/types";
 
 function mint() {
   const [collectionName, setCollectionName] = useState<string>("");
@@ -226,37 +229,23 @@ function mint() {
     </div>
   ));
 
-  useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-  }, []);
+  // useEffect(() => {
+  //   // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+  //   return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+  // }, []);
 
   return (
     <div className="flex h-screen flex-col lg:grid lg:grid-cols-10">
-      <div className="lg:col-span-4 bg-gradient-to-br from-cyan-800 to-rose-500">
-        <div className="flex flex-col items-center justify-center py-2 lg:min-h-screen">
-          <div className="rounded-xl bg-gradient-to-br from-yellow-400 to-purple-600 p-2">
-            <img
-              className="w-44 rounded-xl object-cover lg:h-96 lg:w-72"
-              src="/unikura.jpg"
-              alt="unikura"
-            />
-          </div>
-          <div className="p-5 space-y-2 text-center">
-            <h1 className="text-4xl font-bold text-white">Mint Your NFT</h1>
-          </div>
-        </div>
-      </div>
+      <LeftPanel />
 
       <div className="flex flex-1 flex-col p-12 lg:col-span-6">
         <header className="flex items-center justify-between">
           <Link href="https://unikura.xyz" target="_blank">
             <h1 className="w-52 cursor-pointer text-xl font-extralight sm:w-80">
-              The{" "}
               <span className="font-extrabold underline decoration-pink-600/50">
                 {collectionName}
               </span>{" "}
-              NFT Mint
+              Mint Page
             </h1>
             (
             <span className="pt-2 text-green-500">
@@ -282,20 +271,7 @@ function mint() {
           </button>
         </header>
 
-        <hr className="my-2 border" />
-        {address && (
-          <p className="text-center text-sm text-rose-400">
-            {isMismatched ? (
-              <>You are on wrong network, Please switch to Goerli network</>
-            ) : (
-              <>
-                You're logged in with wallet {address.substring(0, 4)}
-                ...
-                {address.substring(address.length - 4)}
-              </>
-            )}
-          </p>
-        )}
+        <AddressPanel isMismatched={isMismatched} address={address} />
 
         <div className="flex flex-1 flex-col items-center space-y-6 lg:justify-center lg:space-y-0">
           {loading ? (
