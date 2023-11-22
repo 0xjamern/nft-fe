@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+// import InfiniteScroll from "react-infinite-scroll-component";
+
+import { Spinner } from "../components/common/Spinner";
+import { ListHeader } from "../components/list/ListHeader";
+import { TabContent } from "../components/list/TabContent";
 
 import { NftDetail } from "../utils/types";
-import { ListItem } from "../components/ListItem";
 import { getCurrentId, getTokenUri, formatUri, getOwner } from "../utils/unft";
 
 function list() {
   const [loading, setLoading] = useState(true);
-  const [hasMore, setHasMore] = useState(true);
+  const [basicActive, setBasicActive] = useState("tab1");
   const [nftList, setNftList] = useState([] as NftDetail[]);
+  const [mineList, setMineList] = useState([] as NftDetail[]);
+
+  const [openTab, setOpenTab] = useState(1);
 
   useEffect(() => {
     fetchData();
@@ -43,38 +49,16 @@ function list() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-800 to-rose-500">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-3 gap-4 content-stretch">
-          {/* <InfiniteScroll
-        dataLength={nftList.length}
-        next={() => setTimeout(() => fetchData(true), 500)}
-        hasMore={loading}
-        loader={
-          <img
-            className="h-80 w-80 object-contain"
-            src="https://cdn.hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"
-            alt=""
-          />
-        }
-        scrollableTarget="__next"
-      > */}
-          {nftList.map((nftItem: NftDetail, ind: number) => (
-            <ListItem key={ind} nftItem={nftItem} />
-          ))}
-          {nftList.map((nftItem: NftDetail, ind: number) => (
-            <ListItem key={ind} nftItem={nftItem} />
-          ))}
-          {nftList.map((nftItem: NftDetail, ind: number) => (
-            <ListItem key={ind} nftItem={nftItem} />
-          ))}
-          {nftList.map((nftItem: NftDetail, ind: number) => (
-            <ListItem key={ind} nftItem={nftItem} />
-          ))}
-          {nftList.map((nftItem: NftDetail, ind: number) => (
-            <ListItem key={ind} nftItem={nftItem} />
-          ))}
-          {/* </InfiniteScroll> */}
-        </div>
+      <ListHeader />
+
+      <div className="container mx-auto px-4 pt-10">
+        <Spinner visible={loading} />
+        <TabContent
+          openTab={openTab}
+          setOpenTab={setOpenTab}
+          nftList={nftList}
+          mineList={mineList}
+        />
       </div>
     </div>
   );
