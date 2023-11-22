@@ -10,7 +10,10 @@ export const LeftPanel = () => {
           />
         </div>
         <div className="p-5 space-y-2 text-center">
-          <h1 className="text-4xl font-bold text-white">Mint Your NFT</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">Mint Your NFT</h1>
+          <a href="/list">
+            <span className="text-2xl font-bold text-white">Show List</span>
+          </a>
         </div>
       </div>
     </div>

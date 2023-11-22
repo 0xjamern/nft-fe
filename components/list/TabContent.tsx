@@ -5,18 +5,20 @@ import { NftDetail } from "../../utils/types";
 
 type Props = {
   openTab: number;
-  setOpenTab: (id: number) => void;
+  loading: boolean;
   nftList: NftDetail[];
   mineList: NftDetail[];
+  setOpenTab: (id: number) => void;
 };
 
 const nameArr = ["All NFT", "My NFT"];
 
 export const TabContent = ({
   openTab,
-  setOpenTab,
+  loading,
   nftList,
   mineList,
+  setOpenTab,
 }: Props) => {
   return (
     <div className="flex flex-wrap">
@@ -37,8 +39,8 @@ export const TabContent = ({
         </ul>
         <div className="relative flex flex-col min-w-0 w-full mb-6">
           <div className="tab-content tab-space">
-            <ListPanel openTab={openTab} selTab={1} nftList={nftList} />
-            <ListPanel openTab={openTab} selTab={2} nftList={mineList} />
+            <ListPanel loading={loading} openTab={openTab} selTab={1} nftList={nftList} />
+            <ListPanel loading={loading} openTab={openTab} selTab={2} nftList={mineList} />
           </div>
         </div>
       </div>

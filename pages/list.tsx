@@ -1,5 +1,5 @@
+import { useAddress } from "@thirdweb-dev/react";
 import React, { useEffect, useState } from "react";
-// import InfiniteScroll from "react-infinite-scroll-component";
 
 import { Spinner } from "../components/common/Spinner";
 import { ListHeader } from "../components/list/ListHeader";
@@ -9,18 +9,14 @@ import { NftDetail } from "../utils/types";
 import { getCurrentId, getTokenUri, formatUri, getOwner } from "../utils/unft";
 
 function list() {
+  const [openTab, setOpenTab] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [basicActive, setBasicActive] = useState("tab1");
   const [nftList, setNftList] = useState([] as NftDetail[]);
   const [mineList, setMineList] = useState([] as NftDetail[]);
 
-  const [openTab, setOpenTab] = useState(1);
+  const address = useAddress();
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async (flag: boolean = false) => {
+  const fetchData = async () => {
     const currentId = Number(await getCurrentId());
     if (currentId > 0) {
       const idList = Array.from({ length: currentId }, (_, i) => i + 1);
@@ -41,11 +37,25 @@ function list() {
         })
       );
 
+      if (address) {
+        const mineArr = nftArr.filter((nftItem: NftDetail) => {
+          return (
+            address && nftItem.owner.toLowerCase() == address.toLowerCase()
+          );
+        });
+
+        setMineList(mineArr);
+      }
+
       setNftList(nftArr);
     }
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [address]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-800 to-rose-500">
@@ -54,6 +64,7 @@ function list() {
       <div className="container mx-auto px-4 pt-10">
         <Spinner visible={loading} />
         <TabContent
+          loading={loading}
           openTab={openTab}
           setOpenTab={setOpenTab}
           nftList={nftList}
