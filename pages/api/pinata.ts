@@ -1,6 +1,6 @@
 import fs from "fs";
 import pinataSDK from "@pinata/sdk";
-import { formidable, IncomingForm } from "formidable";
+import { IncomingForm } from "formidable";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const pinata = new pinataSDK({ pinataJWTKey: process.env.PINATA_JWT });
