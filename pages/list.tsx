@@ -45,6 +45,8 @@ function list() {
         });
 
         setMineList(mineArr);
+      } else {
+        setMineList([]);
       }
 
       setNftList(nftArr);
