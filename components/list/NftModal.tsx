@@ -14,8 +14,6 @@ export const NftModal = ({ open, nftItem, setOpen }: Props) => {
 
   if (nftItem == null) return <></>;
 
-  console.log(nftItem);
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
