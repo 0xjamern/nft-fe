@@ -3,6 +3,8 @@ import {
   useAddress,
   useDisconnect,
   useMetamask,
+  useConnect,
+  metamaskWallet,
   useNetworkMismatch,
   useSwitchChain,
   ChainId,
@@ -11,11 +13,15 @@ import {
 import { showNotification, NotificationType } from "../../utils/notification";
 
 export const WalletConnect = () => {
+  const metamaskConfig = metamaskWallet();
+
   const address = useAddress();
   const disconnect = useDisconnect();
   const switchChain = useSwitchChain();
   const connectWithMetamask = useMetamask();
   const isMismatched = useNetworkMismatch();
+
+  const connect = useConnect();
 
   useEffect(() => {
     switchNetwork();
@@ -38,7 +44,7 @@ export const WalletConnect = () => {
           ? isMismatched
             ? switchNetwork()
             : disconnect()
-          : connectWithMetamask()
+          : connect(metamaskConfig)
       }
       className="rounded-full bg-rose-400 px-4 py-2 text-xs font-bold text-white lg:px-5 lg:py-3 lg:text-base"
     >
