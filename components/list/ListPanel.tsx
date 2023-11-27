@@ -44,7 +44,7 @@ export const ListPanel = ({ openTab, selTab, loading, nftList }: Props) => {
           <></>
         )}
 
-        <div className="grid grid-cols-4 gap-4 content-stretch">
+        <div className="grid md:grid-cols-4 gap-4 md:content-stretch">
           {nftList.map((nftItem: NftDetail, ind: number) => (
             <ListItem key={ind} nftItem={nftItem} showModal={showModal} />
           ))}
